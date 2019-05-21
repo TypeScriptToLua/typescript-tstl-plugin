@@ -1,0 +1,51 @@
+{
+  "name": "typescript-tstl-plugin",
+  "version": "0.1.0",
+  "description": "TypeScript TypeScriptToLua Language Service plugin",
+  "keywords": [
+    "typescript"
+  ],
+  "repository": "https://github.com/ark120202/typescript-tstl-plugin",
+  "license": "Apache-2.0",
+  "author": "ark120202",
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.ts"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "run-s lint:prettier lint:tslint",
+    "lint:prettier": "prettier --check **/*.{ts,md,yml,json}",
+    "lint:tslint": "tslint -p .",
+    "prepublishOnly": "yarn build"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "proseWrap": "always",
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "dependencies": {
+    "mock-require": "^3.0.3",
+    "resolve-from": "^5.0.0",
+    "resolve-global": "^1.0.0",
+    "tslib": "^1.9.3",
+    "typescript-to-lua": "^0.20.0"
+  },
+  "devDependencies": {
+    "@ark120202/tslint-config": "^4.0.2",
+    "@ark120202/typescript-config": "^2.0.0",
+    "@types/mock-require": "^2.0.0",
+    "@types/node": "^12.0.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.17.1",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}
