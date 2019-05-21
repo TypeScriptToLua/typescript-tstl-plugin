@@ -5,7 +5,7 @@ TypeScript Language Service plugin for [TypeScriptToLua](https://typescripttolua
 ## Installation
 
 The simplest way to use this plugin in Visual Studio Code is to install the
-[extension](https://marketplace.visualstudio.com/items?itemName=ark120202.vscode-typescript-tstl-plugin).
+[extension](https://marketplace.visualstudio.com/items?itemName=ark120202.vscode-typescript-to-lua).
 
 For other editors that use TypeScript Language Service you can enable this plugin manually:
 
