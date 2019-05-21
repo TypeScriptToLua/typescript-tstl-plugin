@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "plugins": [{ "name": "typescript-tstl-plugin" }]
+  },
+  "tstl": {
+    "luaTarget": "5.1"
+  }
+}
