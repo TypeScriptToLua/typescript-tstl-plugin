@@ -5,7 +5,7 @@
   "keywords": [
     "typescript"
   ],
-  "repository": "https://github.com/ark120202/typescript-tstl-plugin",
+  "repository": "https://github.com/TypeScriptToLua/typescript-tstl-plugin",
   "license": "Apache-2.0",
   "author": "ark120202",
   "files": [
