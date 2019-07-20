@@ -3,15 +3,15 @@ import path from 'path';
 import resolveFrom from 'resolve-from';
 import resolveGlobal from 'resolve-global';
 import { ParsedCommandLine } from 'typescript-to-lua';
-import * as ts_module from 'typescript/lib/tsserverlibrary';
+import * as tsserverlibrary from 'typescript/lib/tsserverlibrary';
 
 const pluginMarker = Symbol('pluginMarker');
 class TSTLPlugin {
   constructor(
-    private ts: typeof ts_module,
-    private languageService: ts_module.LanguageService,
-    private project: ts_module.server.Project,
-    private serverHost: ts_module.server.ServerHost,
+    private readonly ts: typeof tsserverlibrary,
+    private readonly languageService: tsserverlibrary.LanguageService,
+    private readonly project: tsserverlibrary.server.Project,
+    private readonly serverHost: tsserverlibrary.server.ServerHost,
   ) {}
 
   private log(message: string) {
@@ -44,6 +44,7 @@ class TSTLPlugin {
         'typescript-to-lua';
 
       this.log(`Loading typescript-to-lua from "${resolved}"`);
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       this._tstl = require(resolved);
     }
 
@@ -54,7 +55,7 @@ class TSTLPlugin {
     this.log('Wrapping language service');
     this.update();
 
-    const intercept: Partial<ts_module.LanguageService> = Object.create(null);
+    const intercept: Partial<tsserverlibrary.LanguageService> = Object.create(null);
     (intercept as any)[pluginMarker] = this;
     intercept.getSemanticDiagnostics = this.getSemanticDiagnostics.bind(this);
     return new Proxy(this.languageService, {
@@ -75,29 +76,32 @@ class TSTLPlugin {
     return diagnostics;
   }
 
-  private getTstlDiagnostics(program: ts_module.Program, sourceFile: ts_module.SourceFile) {
+  private getTstlDiagnostics(
+    program: tsserverlibrary.Program,
+    sourceFile: tsserverlibrary.SourceFile,
+  ) {
     if (this.parsedCommandLine != null && this.parsedCommandLine.raw.tstl != null) {
       Object.assign(program.getCompilerOptions(), this.parsedCommandLine.options);
 
       const transformer = new this.tstl.LuaTransformer(program);
       try {
         transformer.transformSourceFile(sourceFile);
-      } catch (err) {
-        if (err instanceof this.tstl.TranspileError) {
-          const diagnostic: ts_module.Diagnostic = {
+      } catch (error) {
+        if (error instanceof this.tstl.TranspileError) {
+          const diagnostic: tsserverlibrary.Diagnostic = {
             category: this.ts.DiagnosticCategory.Error,
             code: 0,
-            file: err.node.getSourceFile(),
-            start: err.node.getStart(),
-            length: err.node.getWidth(),
-            messageText: err.message,
+            file: error.node.getSourceFile(),
+            start: error.node.getStart(),
+            length: error.node.getWidth(),
+            messageText: error.message,
             source: 'typescript-to-lua',
           };
 
           return [diagnostic];
         }
 
-        this.log(`Error during transpilation: ${err.stack}`);
+        this.log(`Error during transpilation: ${error.stack}`);
       }
     }
 
@@ -105,7 +109,7 @@ class TSTLPlugin {
   }
 }
 
-const init: ts_module.server.PluginModuleFactory = ({ typescript }) => {
+const init: tsserverlibrary.server.PluginModuleFactory = ({ typescript }) => {
   mockRequire('typescript', typescript);
 
   return {

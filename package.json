@@ -17,9 +17,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "lint": "run-s lint:prettier lint:tslint",
+    "lint": "run-s lint:prettier lint:eslint",
+    "lint:eslint": "eslint . --ext .ts",
     "lint:prettier": "prettier --check **/*.{ts,md,yml,json}",
-    "lint:tslint": "tslint -p .",
     "prepublishOnly": "yarn build"
   },
   "prettier": {
@@ -27,6 +27,12 @@
     "proseWrap": "always",
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "eslintConfig": {
+    "extends": "@ark120202/eslint-config/node",
+    "parserOptions": {
+      "project": "tsconfig.json"
+    }
   },
   "dependencies": {
     "mock-require": "^3.0.3",
@@ -36,13 +42,13 @@
     "typescript-to-lua": "^0.20.0"
   },
   "devDependencies": {
-    "@ark120202/tslint-config": "^4.0.2",
+    "@ark120202/eslint-config": "^1.0.0",
     "@ark120202/typescript-config": "^2.0.0",
     "@types/mock-require": "^2.0.0",
     "@types/node": "^12.0.2",
+    "eslint": "^5.16.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.17.1",
-    "tslint": "^5.16.0",
     "typescript": "^3.4.5"
   },
   "engines": {
