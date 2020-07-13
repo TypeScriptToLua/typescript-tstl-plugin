@@ -109,7 +109,7 @@ class TSTLPlugin {
           throw new Error(`Unsupported TypeScriptToLua version: ${this.tstl.version}`);
         }
 
-        return diagnostics.map(diag => ({ ...diag, code: undefined! }));
+        return diagnostics.map((diag) => ({ ...diag, code: undefined! }));
       } catch (error) {
         this.log(`Error during transpilation: ${error.stack}`);
       }
