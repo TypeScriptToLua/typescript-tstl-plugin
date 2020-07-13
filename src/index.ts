@@ -80,27 +80,19 @@ class TSTLPlugin {
     program: tsserverlibrary.Program,
     sourceFile: tsserverlibrary.SourceFile,
   ) {
-    if (this.parsedCommandLine != null && this.parsedCommandLine.raw.tstl != null) {
-      Object.assign(program.getCompilerOptions(), this.parsedCommandLine.options);
+    if (this.parsedCommandLine?.raw.tstl != null) {
+      const programOptions = program.getCompilerOptions();
+      Object.assign(programOptions, this.parsedCommandLine.options);
+      programOptions.noEmit = true;
+      programOptions.noEmitOnError = false;
+      programOptions.declaration = false;
+      programOptions.declarationMap = false;
+      programOptions.emitDeclarationOnly = false;
 
-      const transformer = new this.tstl.LuaTransformer(program);
       try {
-        transformer.transformSourceFile(sourceFile);
+        const { diagnostics } = this.tstl.transpile({ program, sourceFiles: [sourceFile] });
+        return diagnostics;
       } catch (error) {
-        if (error instanceof this.tstl.TranspileError) {
-          const diagnostic: tsserverlibrary.Diagnostic = {
-            category: this.ts.DiagnosticCategory.Error,
-            code: 0,
-            file: error.node.getSourceFile(),
-            start: error.node.getStart(),
-            length: error.node.getWidth(),
-            messageText: error.message,
-            source: 'typescript-to-lua',
-          };
-
-          return [diagnostic];
-        }
-
         this.log(`Error during transpilation: ${error.stack}`);
       }
     }
