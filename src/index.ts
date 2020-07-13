@@ -2,8 +2,8 @@ import mockRequire from 'mock-require';
 import path from 'path';
 import resolveFrom from 'resolve-from';
 import resolveGlobal from 'resolve-global';
-import { ParsedCommandLine } from 'typescript-to-lua';
-import * as tsserverlibrary from 'typescript/lib/tsserverlibrary';
+import type * as tstl from 'typescript-to-lua';
+import type * as tsserverlibrary from 'typescript/lib/tsserverlibrary';
 
 const pluginMarker = Symbol('pluginMarker');
 class TSTLPlugin {
@@ -18,7 +18,7 @@ class TSTLPlugin {
     this.project.log(`[typescript-tstl-plugin] ${this.project.getProjectName()}: ${message}`);
   }
 
-  private parsedCommandLine?: ParsedCommandLine;
+  private parsedCommandLine?: tstl.ParsedCommandLine;
   public update() {
     this.log('Updating project');
     if (!(this.project instanceof this.ts.server.ConfiguredProject)) return;
@@ -90,8 +90,26 @@ class TSTLPlugin {
       programOptions.emitDeclarationOnly = false;
 
       try {
-        const { diagnostics } = this.tstl.transpile({ program, sourceFiles: [sourceFile] });
-        return diagnostics;
+        let diagnostics: tsserverlibrary.Diagnostic[] | undefined;
+
+        // >=0.35.0
+        if (this.tstl.getProgramTranspileResult !== undefined) {
+          ({ diagnostics } = this.tstl.getProgramTranspileResult(this.serverHost, () => {}, {
+            program,
+            sourceFiles: [sourceFile],
+          }));
+        }
+
+        // >=0.19.0
+        if (this.tstl.transpile !== undefined) {
+          ({ diagnostics } = this.tstl.transpile({ program, sourceFiles: [sourceFile] }));
+        }
+
+        if (diagnostics === undefined) {
+          throw new Error(`Unsupported TypeScriptToLua version: ${this.tstl.version}`);
+        }
+
+        return diagnostics.map(diag => ({ ...diag, code: undefined! }));
       } catch (error) {
         this.log(`Error during transpilation: ${error.stack}`);
       }
