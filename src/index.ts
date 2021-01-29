@@ -93,6 +93,7 @@ class TSTLPlugin {
         let diagnostics: tsserverlibrary.Diagnostic[] | undefined;
 
         // >=0.35.0
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (this.tstl.getProgramTranspileResult !== undefined) {
           ({ diagnostics } = this.tstl.getProgramTranspileResult(this.serverHost, () => {}, {
             program,
