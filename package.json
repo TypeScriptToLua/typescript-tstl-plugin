@@ -20,7 +20,8 @@
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint . --ext .ts",
     "lint:prettier": "prettier --check .",
-    "prepublishOnly": "yarn build"
+    "fix:prettier": "prettier --write .",
+    "prepublishOnly": "npm build"
   },
   "prettier": {
     "printWidth": 100,
