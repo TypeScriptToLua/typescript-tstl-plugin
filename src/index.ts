@@ -24,14 +24,15 @@ class TSTLPlugin {
     if (!(this.project instanceof this.ts.server.ConfiguredProject)) return;
 
     const configFilePath = this.project.getConfigFilePath();
+    const config = this.ts.parseJsonSourceFileConfigFileContent(
+      this.ts.readJsonConfigFile(configFilePath, this.serverHost.readFile),
+      this.serverHost,
+      path.dirname(configFilePath),
+      undefined,
+      configFilePath,
+    );
     this.parsedCommandLine = this.tstl.updateParsedConfigFile(
-      this.ts.parseJsonSourceFileConfigFileContent(
-        this.ts.readJsonConfigFile(configFilePath, this.serverHost.readFile),
-        this.serverHost,
-        path.dirname(configFilePath),
-        undefined,
-        configFilePath,
-      ),
+      config
     );
   }
 
