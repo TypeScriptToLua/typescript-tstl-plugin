@@ -11,8 +11,6 @@ For other editors that use TypeScript Language Service you can enable this plugi
 
 ```shell
 npm install typescript-tstl-plugin
-# or
-yarn add typescript-tstl-plugin
 ```
 
 tsconfig.json:

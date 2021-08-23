@@ -137,4 +137,4 @@ const init: tsserverlibrary.server.PluginModuleFactory = ({ typescript }) => {
   };
 };
 
-export = init;
+export default init;

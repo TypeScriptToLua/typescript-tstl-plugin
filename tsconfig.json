@@ -1,8 +1,23 @@
 {
-  "extends": "@ark120202/typescript-config/node/12.json",
   "include": ["src"],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./lib"
+    "outDir": "./lib",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "newLine": "LF",
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "target": "es2020",
+    "lib": ["es2020"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true
   }
 }

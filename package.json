@@ -29,28 +29,24 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "eslintConfig": {
-    "extends": "@ark120202/eslint-config/node",
-    "parserOptions": {
-      "project": "tsconfig.json"
-    }
-  },
   "dependencies": {
     "mock-require": "^3.0.3",
     "resolve-from": "^5.0.0",
-    "resolve-global": "^1.0.0",
-    "tslib": "^2.0.0",
-    "typescript-to-lua": "^0.35.0"
+    "resolve-global": "^1.0.0"
   },
   "devDependencies": {
-    "@ark120202/eslint-config": "^2.3.0",
-    "@ark120202/typescript-config": "^2.1.0",
     "@types/mock-require": "^2.0.0",
     "@types/node": "^14.0.23",
-    "eslint": "^7.4.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "^6.9.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
-    "typescript": "^3.9.6"
+    "typescript": "^4.3.5"
+  },
+  "peerDependencies": {
+    "typescript-to-lua": "^0.35.0"
   },
   "engines": {
     "node": ">=12.13.0"
