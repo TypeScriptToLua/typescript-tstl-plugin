@@ -1,9 +1,8 @@
-
 name: Release
 
 on:
   push:
-    tags: "*"
+    tags: '*'
 
 jobs:
   release:
@@ -16,7 +15,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.13.1
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build
       - run: npm publish

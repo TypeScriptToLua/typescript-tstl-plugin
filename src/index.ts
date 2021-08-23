@@ -31,9 +31,7 @@ class TSTLPlugin {
       undefined,
       configFilePath,
     );
-    this.parsedCommandLine = this.tstl.updateParsedConfigFile(
-      config
-    );
+    this.parsedCommandLine = this.tstl.updateParsedConfigFile(config);
   }
 
   private _tstl?: typeof import('typescript-to-lua');
