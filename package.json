@@ -21,7 +21,9 @@
     "lint:eslint": "eslint . --ext .ts",
     "lint:prettier": "prettier --check .",
     "fix:prettier": "prettier --write .",
-    "prepublishOnly": "npm build"
+    "prepublishOnly": "npm run build",
+    "preversion": "npm run build",
+    "postversion": "git push && git push --tags"
   },
   "prettier": {
     "printWidth": 100,
