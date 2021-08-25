@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "typescript-to-lua": "link:../node_modules/typescript-to-lua",
-    "typescript-tstl-plugin": "link:.."
+    "typescript-to-lua": "../node_modules/typescript-to-lua",
+    "typescript-tstl-plugin": ".."
   }
 }
